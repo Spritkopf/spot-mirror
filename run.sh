@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# run supercronic
+supercronic /etc/spodcast_crontab &
 
-#podcats serve --host ${HOST} --port ${PORT} /content
-
-echo "HELLO WORLD"
-
-/run.sh
+# serve podcast XML
+podcats serve --host 0.0.0.0 --port 9900 /data/output

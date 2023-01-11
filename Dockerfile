@@ -1,4 +1,3 @@
-#FROM python:3.10.0-slim
 FROM python:3-alpine
 
 # install supercronic for periodic updates
@@ -29,7 +28,11 @@ RUN chmod +x /usr/local/bin/spodcast-init
 COPY download_episode /usr/local/bin
 RUN chmod +x /usr/local/bin/download_episode
 
-CMD ["/bin/bash", "-c", "echo Hello World"]
+# Copy run script
+COPY run.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/run.sh
+
+ENTRYPOINT ["/usr/local/bin/run.sh"]
 
 LABEL description="Monitor a folder and host a podcast RSS file for all \
 media inside of it"
