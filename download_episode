@@ -1,0 +1,46 @@
+#!/bin/sh
+
+
+Help()
+{
+   # Display Help
+   echo "Downloads an episode with spodcast."
+   echo
+   echo "Syntax: download_episode [-h|r] URL"
+   echo "options:"
+   echo "h     Print this Help."
+   echo "r     Maximum number of retries in case of timeout (default: 10)"
+   echo
+}
+
+max_retry=10
+
+if [ -z $1 ]
+then
+    Help
+    exit 1
+fi
+
+
+# Get the options
+while getopts ":hr:" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+      r) #max_retry
+         max_retry=$OPTARG;;
+      \?) # Invalid option
+         echo "Error: Invalid option"
+         exit;;
+   esac
+done
+
+counter=0
+until spodcast -c /data/spodcast.json --log-level info --max-episodes 1 --retry 10 $1
+do
+   sleep 1
+   [[ counter -eq $max_retry ]] && echo "Failed!" && exit 1
+   echo "Trying again. Try #$counter"
+   ((counter++))
+done

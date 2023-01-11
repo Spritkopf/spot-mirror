@@ -1,0 +1,39 @@
+#!/bin/sh
+
+cred_file="/data/login.txt"
+Help()
+{
+   # Display Help
+   echo "Prepare spodcast, store login credentials."
+   echo
+   echo "Syntax: spodcast-init [-h|l]"
+   echo "options:"
+   echo "h     Print this Help."
+   echo "l     path to file with login credentials (default: /data/login.txt)."
+   echo
+}
+
+# Get the options
+while getopts ":hl:" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+      l) # cred_file
+         cred_file=$OPTARG;;
+      \?) # Invalid option
+         echo "Error: Invalid option"
+         exit;;
+   esac
+done
+
+
+if [ ! -e $cred_file ]
+then
+  echo "Credential file not found at $cred_file"
+  exit 1
+fi
+
+mkdir -p /data/output
+spodcast -c /data/spodcast.json --root-path /data/output --log-level info --credentials-location creds.json -l /data/login.txt
+cp /data/spodcast-cred-*.json /data/cred.json
