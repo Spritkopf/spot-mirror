@@ -35,6 +35,7 @@ RUN chmod +x /usr/local/bin/run.sh
 ENV FEED_HOST  0.0.0.0
 ENV FEED_PORT  9900
 ENV FEED_TITLE MyFeedMirror
+ENV TIMEOUT_RETRY_NUM   10
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
 

@@ -13,7 +13,7 @@ Help()
    echo
 }
 
-max_retry=10
+max_retry=$TIMEOUT_RETRY_NUM
 
 if [ -z $1 ]
 then
@@ -41,6 +41,6 @@ until spodcast -c /data/spodcast.json --log-level info --max-episodes 1 --retry 
 do
    sleep 1
    [[ counter -eq $max_retry ]] && echo "Failed!" && exit 1
-   echo "Trying again. Try #$counter"
+   echo "Trying again. Try #${counter}"
    ((counter++))
 done

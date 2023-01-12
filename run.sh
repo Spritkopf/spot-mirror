@@ -28,6 +28,9 @@ done < <(env)
 # check crontab for errors
 supercronic -test ${CRONTAB_FILE}
 
+# init spotify credentials for spodcast
+spodcast-init
+
 # run supercronic
 supercronic ${CRONTAB_FILE} &
 
