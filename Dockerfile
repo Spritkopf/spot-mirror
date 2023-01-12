@@ -39,5 +39,4 @@ ENV TIMEOUT_RETRY_NUM   10
 
 ENTRYPOINT ["/usr/local/bin/run.sh"]
 
-LABEL description="Monitor a folder and host a podcast RSS file for all \
-media inside of it"
+LABEL description="Monitor a Spotify podcast, download episodes and host them locally"
