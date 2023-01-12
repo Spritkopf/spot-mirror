@@ -1,8 +1,0 @@
-# Run every minute
-*/1 * * * * download_episode <URL>
-
-# Run every 2 seconds
-#*/2 * * * * * * echo $MYENV
-
-# Run everyday at 5am
-#* 5 * * *  echo $MYENV

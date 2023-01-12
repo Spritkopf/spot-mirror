@@ -18,8 +18,6 @@ RUN apk --no-cache add gcc libc-dev ffmpeg \
 VOLUME ["/data"]
 WORKDIR /data
 
-COPY spodcast_crontab /etc
-
 # Copy init script
 COPY spodcast-init /usr/local/bin
 RUN chmod +x /usr/local/bin/spodcast-init
