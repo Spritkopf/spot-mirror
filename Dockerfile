@@ -32,6 +32,10 @@ RUN chmod +x /usr/local/bin/download_episode
 COPY run.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/run.sh
 
+ENV FEED_HOST  0.0.0.0
+ENV FEED_PORT  9900
+ENV FEED_TITLE MyFeedMirror
+
 ENTRYPOINT ["/usr/local/bin/run.sh"]
 
 LABEL description="Monitor a folder and host a podcast RSS file for all \
