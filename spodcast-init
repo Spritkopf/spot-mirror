@@ -13,6 +13,8 @@ Help()
    echo
 }
 
+max_retry=${TIMEOUT_RETRY_NUM:-5}
+
 # Get the options
 while getopts ":hl:" option; do
    case $option in
@@ -44,7 +46,10 @@ counter=0
 until spodcast -c /data/spodcast.json --root-path /data/output --log-level info --credentials-location creds.json -l /data/login.txt
 do
    sleep 1
-   [[ counter -eq ${TIMEOUT_RETRY_NUM} ]] && echo "Failed!" && exit 1
+   if (( counter == max_retry )); then
+      echo "Failed!"
+      exit 1
+   fi
    echo "Trying again. Try #${counter}"
    ((counter++))
 done

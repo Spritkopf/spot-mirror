@@ -6,14 +6,14 @@ Help()
    # Display Help
    echo "Downloads an episode with spodcast."
    echo
-   echo "Syntax: download_episode [-h|r] URL"
+   echo "Syntax: download_episode [-h|r <retries>] URL"
    echo "options:"
    echo "h     Print this Help."
-   echo "r     Maximum number of retries in case of timeout (default: 10)"
+   echo "r     Maximum number of retries in case of timeout (default: 5)"
    echo
 }
 
-max_retry=$TIMEOUT_RETRY_NUM
+max_retry=${TIMEOUT_RETRY_NUM:-5}
 
 if [ -z $1 ]
 then
@@ -32,7 +32,7 @@ while getopts ":hr:" option; do
          max_retry=$OPTARG;;
       \?) # Invalid option
          echo "Error: Invalid option"
-         exit;;
+         exit 1;;
    esac
 done
 
@@ -40,7 +40,10 @@ counter=0
 until spodcast -c /data/spodcast.json --log-level info --max-episodes 1 --transcode yes --retry 10 $1
 do
    sleep 1
-   [[ counter -eq $max_retry ]] && echo "Failed!" && exit 1
+   if (( counter == max_retry )); then
+      echo "Failed!"
+      exit 1
+   fi
    echo "Trying again. Try #${counter}"
    ((counter++))
 done
